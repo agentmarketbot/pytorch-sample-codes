@@ -158,7 +158,7 @@ def train():
         recon_loss = F.binary_cross_entropy(x_sample, x, size_average=False)
 
         # kl divergence loss
-        kl_loss = 0.5 * torch.sum(torch.exp(z_var) + z_mu**2 - 1.0 - z_var)
+        kl_loss = -0.5 * torch.sum(1 + z_var - z_mu**2 - torch.exp(z_var))
 
         # total loss
         loss = recon_loss + kl_loss
@@ -194,7 +194,7 @@ def test():
             recon_loss = F.binary_cross_entropy(x_sample, x, size_average=False)
 
             # kl divergence loss
-            kl_loss = 0.5 * torch.sum(torch.exp(z_var) + z_mu**2 - 1.0 - z_var)
+            kl_loss = -0.5 * torch.sum(1 + z_var - z_mu**2 - torch.exp(z_var))
 
             # total loss
             loss = recon_loss + kl_loss
